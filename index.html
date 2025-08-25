@@ -61,16 +61,6 @@
     .balloon::before{top:-30px; left:0;}
     .balloon::after{left:30px; top:0;}
     @keyframes floatUp {from{transform:translateY(0) rotate(-45deg); opacity:1;} to{transform:translateY(-120vh) rotate(-45deg); opacity:0;}}
-    #goodBoyBtn {
-      display:none; position:absolute; bottom:40px; left:50%;
-      transform:translateX(-50%);
-      padding:12px 24px; font-size:1.1rem;
-      background:#ff4d6d; color:white; border:none;
-      border-radius:20px; cursor:pointer;
-      box-shadow:0 4px 8px rgba(0,0,0,0.3);
-      transition:background 0.3s;
-    }
-    #goodBoyBtn:hover {background:#e63950;}
     #note {
       position:absolute; top:50%; left:50%;
       transform:translate(-50%, -50%);
@@ -81,13 +71,6 @@
       box-shadow:0 6px 20px rgba(0,0,0,0.2);
     }
     #note.show {opacity:1;}
-    .petal {
-      position:fixed; top:-10px; width:25px; height:25px;
-      background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Cherry_blossom_icon.svg/1024px-Cherry_blossom_icon.svg.png');
-      background-size:cover; opacity:0.9; pointer-events:none;
-      animation:fall linear forwards;
-    }
-    @keyframes fall {to{transform:translateY(110vh) rotate(720deg); opacity:0;}}
   </style>
 </head>
 <body>
@@ -106,7 +89,6 @@
     <div class="candle"><div class="flame"></div></div>
     <div class="cake-text">(tap to blow the candles)</div>
   </div>
-  <button id="goodBoyBtn">press here if u r my good boy :p</button>
   <div id="note">You’re the loveliest thing in my world 💖</div>
 
   <!-- YouTube API -->
@@ -129,7 +111,6 @@
     const scene1 = document.getElementById("scene1");
     const scene2 = document.getElementById("scene2");
     const cakeScene = document.getElementById("cakeScene");
-    const goodBoyBtn = document.getElementById("goodBoyBtn");
     const note = document.getElementById("note");
 
     scene1.style.opacity = 1;
@@ -138,9 +119,7 @@
       step++;
 
       // Mobile-friendly: play music on first tap
-      if (player && player.playVideo) {
-        player.playVideo();
-      }
+      if (player && player.playVideo) { player.playVideo(); }
 
       if (step === 1) {
         scene1.style.opacity = 0;
@@ -156,7 +135,7 @@
         document.head.appendChild(styleEl);
 
         setTimeout(()=>spawnBalloons(15),1500);
-        setTimeout(()=>goodBoyBtn.style.display="block",3000);
+        setTimeout(()=>note.classList.add("show"),2000);
       }
     });
 
@@ -172,33 +151,6 @@
         setTimeout(()=>b.remove(),6000);
       }
     }
-
-    function spawnPetals(count){
-      for(let i=0;i<count;i++){
-        let p=document.createElement("div");
-        p.className="petal";
-        p.style.left=Math.random()*100+"vw";
-        p.style.animationDuration=(6+Math.random()*4)+"s";
-        // random rotation speed for magic effect
-        let rotate = Math.random()*360;
-        p.style.transform = `rotate(${rotate}deg)`;
-        document.body.appendChild(p);
-        setTimeout(()=>p.remove(),10000);
-      }
-    }
-
-    goodBoyBtn.addEventListener("click", () => {
-      cakeScene.style.display="none";
-      note.classList.add("show");
-      goodBoyBtn.innerText="cherry blossom shower <3";
-
-      // Mobile-friendly music trigger
-      if(player && player.playVideo){ player.playVideo(); }
-
-      // Start magical cherry blossom shower
-      setInterval(()=>spawnPetals(15),400);
-      spawnPetals(200);
-    });
   </script>
 </body>
 </html>
