@@ -71,6 +71,16 @@
       box-shadow:0 6px 20px rgba(0,0,0,0.2);
     }
     #note.show {opacity:1;}
+    #surpriseBtn {
+      display:none; position:absolute; bottom:40px; left:50%;
+      transform:translateX(-50%);
+      padding:12px 24px; font-size:1.1rem;
+      background:#ff4d6d; color:white; border:none;
+      border-radius:20px; cursor:pointer;
+      box-shadow:0 4px 8px rgba(0,0,0,0.3);
+      transition:background 0.3s;
+    }
+    #surpriseBtn:hover {background:#e63950;}
   </style>
 </head>
 <body>
@@ -90,6 +100,7 @@
     <div class="cake-text">(tap to blow the candles)</div>
   </div>
   <div id="note">You’re the loveliest thing in my world 💖</div>
+  <button id="surpriseBtn">Surprise!</button>
 
   <!-- YouTube API -->
   <div id="ytplayer" style="display:none;"></div>
@@ -112,13 +123,13 @@
     const scene2 = document.getElementById("scene2");
     const cakeScene = document.getElementById("cakeScene");
     const note = document.getElementById("note");
+    const surpriseBtn = document.getElementById("surpriseBtn");
 
     scene1.style.opacity = 1;
 
     document.body.addEventListener("click", () => {
       step++;
 
-      // Mobile-friendly: play music on first tap
       if (player && player.playVideo) { player.playVideo(); }
 
       if (step === 1) {
@@ -135,22 +146,5 @@
         document.head.appendChild(styleEl);
 
         setTimeout(()=>spawnBalloons(15),1500);
-        setTimeout(()=>note.classList.add("show"),2000);
-      }
-    });
-
-    function spawnBalloons(count){
-      const colors=["#ff4d6d","#ff7f7f","#e75480","#ff9999","#cc3366"];
-      for(let i=0;i<count;i++){
-        let b=document.createElement("div");
-        b.className="balloon";
-        b.style.left=Math.random()*90+"vw";
-        b.style.background=colors[Math.floor(Math.random()*colors.length)];
-        b.style.animationDuration=(4+Math.random()*2)+"s";
-        document.body.appendChild(b);
-        setTimeout(()=>b.remove(),6000);
-      }
-    }
-  </script>
-</body>
-</html>
+        setTimeout(()=>{
+          note.classList.add("
